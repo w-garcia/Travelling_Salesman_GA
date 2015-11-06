@@ -54,12 +54,6 @@ namespace travelling_salesman
             int magnification = 100;
 
             s.Fitness = (1 / distanceTravelled) * magnification;
-
-            if (s > Population.BestSolution)
-            {
-                Population.BestSolution = s;
-                Population.BestHasChanged = true;
-            }
         }
 
         static private double DistanceFromLastCity(KeyValuePair<int, int> lastCityVisited, KeyValuePair<int, int> currentCityVisited)

@@ -23,21 +23,25 @@ namespace travelling_salesman
         {
             _btnGo.Enabled = false;
             _backgroundWorker.RunWorkerAsync();
+            _progressBar.Value = 0;
         }
 
         private void DoWork(object sender, DoWorkEventArgs e)
         {
-            GA.Population.RunGenerations(100, _backgroundWorker);
+            GA.Population.RunGenerations(Convert.ToInt32(_nudGenerations.Value), _backgroundWorker);
         }
 
         private void OnCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _btnGo.Enabled = true;
+            _progressBar.Value = 100;
+            _lblDistanceDisplay.Text = Convert.ToString(GA.Population.BestSolution.DistanceTravelled);
+            _lblDisplayInitial.Text = Convert.ToString(GA.Population.InitialSolution.DistanceTravelled);
         }
 
         private void OnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            _progressBar.Value = e.ProgressPercentage;
         }
     }
 }

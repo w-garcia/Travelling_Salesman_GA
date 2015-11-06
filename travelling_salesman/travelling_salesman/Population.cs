@@ -10,14 +10,17 @@ namespace travelling_salesman
     {
         private Problem _problem;
         List<Solution> solutionList = new List<Solution>();
-        static private Solution _bestSolution = new Solution();
+
+        private Solution _bestSolution = new Solution();
+        private Solution _initialSolution = new Solution();
+
         private static int _generationsSoFar = 0;
         private bool _runningInBackground = false;
         private static bool _bestHasChanged = false; 
 
         #region public properties 
 
-        public static Solution BestSolution
+        public Solution BestSolution
         {
             get { return _bestSolution; }
             set { _bestSolution = value; }
@@ -35,6 +38,13 @@ namespace travelling_salesman
             set { _bestHasChanged = value; }
         }
 
+        public Solution InitialSolution
+        {
+            get { return _initialSolution; }
+            set { _initialSolution = value; }
+        }
+
+
 
         #endregion
        
@@ -42,7 +52,7 @@ namespace travelling_salesman
         {
             _problem = problem;
             InitializePopulation();
-            BestSolution = new Solution();
+            _bestSolution = new Solution();
             _bestHasChanged = false;
             _generationsSoFar = 0;
         }
@@ -83,14 +93,27 @@ namespace travelling_salesman
 
         private void RunGeneration()
         {
+            CheckBestSolution(ref _initialSolution);
             Tournaments();
             Mutate();
             _generationsSoFar++;
+            CheckBestSolution(ref _bestSolution);
+        }
+
+        private void CheckBestSolution(ref Solution solutionToSave)
+        {
+            foreach(Solution s in solutionList)
+            {
+                if (s > solutionToSave)
+                {
+                    solutionToSave = s;
+                }
+            }
         }
 
         private void Tournaments()
         {
-            Shuffle(); // shuffle solution list
+            //Shuffle(); // shuffle solution list
             for (int i = 0; i < solutionList.Count() - 4; i += 4)
             {
                 RunOneTournament(i);
@@ -105,13 +128,13 @@ namespace travelling_salesman
 
         private void Mate(int start)
         {
-            int cross1 = EvolutionHelper.rand(100);
-            int cross2 = cross1;
-            while (cross1 == cross2)
-            {
-                cross1 = EvolutionHelper.rand(100);
-            }
-            if (cross1 > cross2) SwapInt(ref cross1, ref cross2);
+            //int cross1 = EvolutionHelper.rand(100);
+            //int cross2 = cross1;
+            //while (cross1 == cross2)
+            //{
+            //    cross1 = EvolutionHelper.rand(100);
+            //}
+            //if (cross1 > cross2) SwapInt(ref cross1, ref cross2);
 
             Solution parent1 = solutionList[start];
             Solution parent2 = solutionList[start + 1];
@@ -121,7 +144,9 @@ namespace travelling_salesman
 
             for (int i = 0; i < 100; i++)
             {
-                if ((i < cross1) || (i > cross2))
+                double randUpperLimit = EvolutionHelper.randDouble();
+                //if ((i < cross1) || (i > cross2)) // two point crossover
+                if (EvolutionHelper.randDouble() < .5) // uniform crossover
                 {
                     child1Tour.Add(parent1.Genome[i]);
                     child2Tour.Add(parent2.Genome[i]);

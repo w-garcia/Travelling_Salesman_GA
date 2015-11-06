@@ -80,7 +80,12 @@ namespace travelling_salesman
 
         public void Mutate()
         {
-            //throw new NotImplementedException();
+            int randNumCitiesToFlip = EvolutionHelper.rand(100);
+            for (int i = 0; i < randNumCitiesToFlip; i++)
+            {
+                int randIndex = EvolutionHelper.rand(100);
+                genome[randIndex] = new KeyValuePair<int, double>(randIndex, EvolutionHelper.randDouble());
+            }
         }
     }
 }
