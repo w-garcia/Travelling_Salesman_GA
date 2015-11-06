@@ -36,14 +36,14 @@
             this.mainControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainControl.Location = new System.Drawing.Point(0, 0);
             this.mainControl.Name = "mainControl";
-            this.mainControl.Size = new System.Drawing.Size(553, 290);
+            this.mainControl.Size = new System.Drawing.Size(657, 380);
             this.mainControl.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(553, 290);
+            this.ClientSize = new System.Drawing.Size(657, 380);
             this.Controls.Add(this.mainControl);
             this.Name = "MainForm";
             this.Text = "CAP4630 Garcia Washington HW2";
@@ -54,6 +54,7 @@
         #endregion
 
         private MainControl mainControl;
+
     }
 }
 
