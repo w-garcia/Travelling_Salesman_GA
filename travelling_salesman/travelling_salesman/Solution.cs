@@ -7,10 +7,17 @@ namespace travelling_salesman
 {
     class Solution : IEquatable<Solution>, IComparable<Solution>
     {
-        private List<KeyValuePair<int, double>> genome;
+        private List<KeyValuePair<int, double>> genome = new List<KeyValuePair<int,double>>();
         private double _fitness;
+        private double _distanceTravelled;
 
         #region public properties
+
+        public double DistanceTravelled
+        {
+            get { return _distanceTravelled; }
+            set { _distanceTravelled = value; }
+        }
 
         public double Fitness
         {

@@ -8,6 +8,7 @@ namespace travelling_salesman
 {
     class Population
     {
+        private Problem _problem;
         List<Solution> solutionList = new List<Solution>();
         static private Solution _bestSolution = new Solution();
         private static int _generationsSoFar = 0;
@@ -37,8 +38,9 @@ namespace travelling_salesman
 
         #endregion
        
-        public Population()
+        public Population(Problem problem)
         {
+            _problem = problem;
             InitializePopulation();
             BestSolution = new Solution();
             _bestHasChanged = false;
@@ -59,7 +61,7 @@ namespace travelling_salesman
         {
             foreach (Solution s in solutionList)
             {
-                Problem.EvaluateSolution(s);
+               _problem.EvaluateSolution(s);
             }
         }
         
@@ -134,8 +136,8 @@ namespace travelling_salesman
             solutionList[start + 2].Genome = child1Tour;
             solutionList[start + 3].Genome = child2Tour;
 
-            Problem.EvaluateSolution(solutionList[start + 2]);
-            Problem.EvaluateSolution(solutionList[start + 3]);
+            _problem.EvaluateSolution(solutionList[start + 2]);
+            _problem.EvaluateSolution(solutionList[start + 3]);
 
         }
 

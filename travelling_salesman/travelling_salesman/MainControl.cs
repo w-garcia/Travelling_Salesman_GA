@@ -22,7 +22,7 @@ namespace travelling_salesman
         private void OnGoClick(object sender, EventArgs e)
         {
             _btnGo.Enabled = false;
-           // _backgroundWorker.RunWorkerAsync();
+            _backgroundWorker.RunWorkerAsync();
         }
 
         private void DoWork(object sender, DoWorkEventArgs e)

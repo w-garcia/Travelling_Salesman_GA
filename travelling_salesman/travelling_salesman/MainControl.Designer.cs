@@ -44,6 +44,7 @@
             // 
             // _backgroundWorker
             // 
+            this._backgroundWorker.WorkerReportsProgress = true;
             this._backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DoWork);
             this._backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.OnProgressChanged);
             this._backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.OnCompleted);

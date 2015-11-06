@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace travelling_salesman
 {
-    public static class EvolutionHelper
+    static class EvolutionHelper
     {
         static Random random = new Random();
 
