@@ -25,7 +25,7 @@ namespace travelling_salesman
             return new KeyValuePair<int, int>(random.Next(Emax), random.Next(Emax));
         }
 
-        static public int populationSize = 10000;
+        static public int populationSize = 1000;
         public static double probabilityOfSolutionMutation = 0.03;
 
         public static bool chance(double p)

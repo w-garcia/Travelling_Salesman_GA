@@ -34,9 +34,6 @@
             this._nudNumRuns = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this._btnPickFilePath = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this._nudNumGensPerRun = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -109,9 +106,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this._btnPickFilePath);
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this._nudNumGensPerRun);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this._nudNumRuns);
@@ -123,34 +117,6 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input";
-            // 
-            // _btnPickFilePath
-            // 
-            this._btnPickFilePath.Location = new System.Drawing.Point(507, 50);
-            this._btnPickFilePath.Name = "_btnPickFilePath";
-            this._btnPickFilePath.Size = new System.Drawing.Size(32, 21);
-            this._btnPickFilePath.TabIndex = 8;
-            this._btnPickFilePath.Text = "...";
-            this._btnPickFilePath.UseVisualStyleBackColor = true;
-            this._btnPickFilePath.Click += new System.EventHandler(this.OnClickSetFilePath);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(317, 51);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(184, 20);
-            this.textBox1.TabIndex = 7;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(314, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(121, 18);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "File Output Path: ";
             // 
             // _nudNumGensPerRun
             // 
@@ -233,9 +199,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(13, 50);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 13);
+            this.label4.Size = new System.Drawing.Size(168, 13);
             this.label4.TabIndex = 5;
-            this.label4.Text = "(Average # calls to mate per run)";
+            this.label4.Text = "(Average # calls to fitness per run)";
             // 
             // _backgroundWorkerMult
             // 
@@ -288,9 +254,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label _lblWorkResult;
-        private System.Windows.Forms.Button _btnPickFilePath;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label5;
         private System.ComponentModel.BackgroundWorker _backgroundWorkerMult;
         private System.Windows.Forms.Label _lblRunsSoFar;
         private System.Windows.Forms.Label label6;

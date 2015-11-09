@@ -13,16 +13,9 @@ namespace travelling_salesman
 
         private Solution _bestSolution = new Solution();
         private Solution _initialSolution = new Solution();
-        private double _workDone = 0;
         private static int _generationsSoFar = 0;
 
         #region public properties 
-
-        public double WorkDone
-        {
-            get { return _workDone; }
-            set { _workDone = value; }
-        }
 
         public Solution BestSolution
         {
@@ -43,6 +36,12 @@ namespace travelling_salesman
         }
 
 
+        public int WorkDone
+        {
+            get { return _problem.WorkDone; }
+            set { _problem.WorkDone = value; }
+        }
+        
 
         #endregion
        
@@ -143,8 +142,8 @@ namespace travelling_salesman
             for (int i = 0; i < 100; i++)
             {
                 //double randUpperLimit = EvolutionHelper.randDouble(1);
-                if ((i < cross1) || (i > cross2)) // two point crossover
-                //if (EvolutionHelper.randDouble(1) < .6) // uniform crossover
+                //if ((i < cross1) || (i > cross2)) // two point crossover
+                if (EvolutionHelper.randDouble(1) < .6) // uniform crossover
                 {
                     child1Tour.Add(parent1.Genome[i]);
                     child2Tour.Add(parent2.Genome[i]);
@@ -161,8 +160,6 @@ namespace travelling_salesman
 
             _problem.EvaluateSolution(solutionList[start + 2]);
             _problem.EvaluateSolution(solutionList[start + 3]);
-
-            _workDone++;
 
         }
 
@@ -197,9 +194,6 @@ namespace travelling_salesman
                 }
             }
         }
-
-
-
         
     }
 }

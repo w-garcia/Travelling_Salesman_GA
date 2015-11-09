@@ -14,9 +14,10 @@ namespace travelling_salesman
     public partial class MultipleControl : UserControl
     {
         string _filePath = AppDomain.CurrentDomain.BaseDirectory;
-        List<int> _runResults = new List<int>();
+        List<double> _runResults = new List<double>();
         GeneticAlgorithm _classGA;
 
+        int _generationsSoFar = 0;
         int _runsSoFar = 0;
         double _totalWorkDone = 0;
 
@@ -48,19 +49,6 @@ namespace travelling_salesman
             _nudNumGensPerRun.Enabled = false;
         }
 
-        private void OnClickSetFilePath(object sender, EventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Comma Delimited File | .csv";
-
-            sfd.InitialDirectory = _filePath;
-
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                _filePath = sfd.FileName;
-            }
-        }
-
         private void DoWork(object sender, DoWorkEventArgs e)
         {
             _classGA.Population.RunGenerations(Convert.ToInt32(_nudNumGensPerRun.Value), _backgroundWorkerMult);
@@ -78,8 +66,11 @@ namespace travelling_salesman
             _lblWorkResult.Text = Convert.ToString((_totalWorkDone) / _runsSoFar);
             _lblRunsSoFar.Text = Convert.ToString(_runsSoFar);
 
-            if (_runsSoFar < _nudNumRuns.Value)
+
+            if (_runsSoFar < _nudNumRuns.Value && _classGA.Population.GenerationsSoFar == _nudNumGensPerRun.Value)
             {
+                _runResults.Add(_classGA.Population.BestSolution.Fitness);
+
                 _progressBarMult.Value = 0;
                 _runsSoFar++;
                 _classGA = new GeneticAlgorithm();
@@ -87,14 +78,38 @@ namespace travelling_salesman
             }
             else if (_runsSoFar == _nudNumRuns.Value)
             {
+                _runResults.Add(_classGA.Population.BestSolution.Fitness);
                 _progressBarMult.Value = 100;
 
                 _runsSoFar = 0;
                 _totalWorkDone = 0;
 
                 EnableControls();
+                WriteResults();
+
+            }
+        }
+
+        private void WriteResults()
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Comma Delimited File | .csv";
+
+            sfd.InitialDirectory = _filePath;
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                _filePath = sfd.FileName;
+                using (StreamWriter sw = new StreamWriter(_filePath))
+                {
+                    for (int i = 0; i < _runResults.Count; i++)
+                    {
+                        sw.WriteLine(_runResults[i] + ",");
+                    }
+                }
 
                 _lblRunsComplete.Visible = true;
+
             }
         }
 

@@ -37,12 +37,23 @@ namespace travelling_salesman
         public List<City> cityMatrix = new List<City>();
 
         private static int _size = 100;
+        private int _workDone = 0;
+
+
 
         public int Size
         {
             get { return _size; }
             set { _size = value; }
-        } 
+        }
+
+        public int WorkDone
+        {
+            get { return _workDone; }
+            set { _workDone = value; }
+        }
+
+
 
         private int CompareValue(indexToDouble x, indexToDouble y)
         {
@@ -88,6 +99,8 @@ namespace travelling_salesman
 
             }
             distanceTravelled += DistanceFromLastCity(cityMatrix[_size-1], cityMatrix[0]);
+
+            _workDone++;
 
             s.Fitness = distanceTravelled;
         }
