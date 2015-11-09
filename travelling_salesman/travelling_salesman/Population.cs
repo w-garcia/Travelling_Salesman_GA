@@ -13,12 +13,16 @@ namespace travelling_salesman
 
         private Solution _bestSolution = new Solution();
         private Solution _initialSolution = new Solution();
-
+        private double _workDone = 0;
         private static int _generationsSoFar = 0;
-        private bool _runningInBackground = false;
-        private static bool _bestHasChanged = false; 
 
         #region public properties 
+
+        public double WorkDone
+        {
+            get { return _workDone; }
+            set { _workDone = value; }
+        }
 
         public Solution BestSolution
         {
@@ -30,12 +34,6 @@ namespace travelling_salesman
         {
             get { return _generationsSoFar; }
             set { _generationsSoFar = value; }
-        }
-
-        public static bool BestHasChanged
-        {
-            get { return _bestHasChanged; }
-            set { _bestHasChanged = value; }
         }
 
         public Solution InitialSolution
@@ -53,7 +51,6 @@ namespace travelling_salesman
             _problem = problem;
             InitializePopulation();
             _bestSolution = new Solution();
-            _bestHasChanged = false;
             _generationsSoFar = 0;
         }
 
@@ -77,7 +74,8 @@ namespace travelling_salesman
         
         public void RunGenerations(int generations, BackgroundWorker worker)
         {
-            _runningInBackground = true;
+
+            CheckBestSolution(ref _initialSolution);
 
             for (int i = 0; i < generations; i++)
             {
@@ -93,7 +91,6 @@ namespace travelling_salesman
 
         private void RunGeneration()
         {
-            CheckBestSolution(ref _initialSolution);
             Tournaments();
             Mutate();
             _generationsSoFar++;
@@ -104,16 +101,16 @@ namespace travelling_salesman
         {
             foreach(Solution s in solutionList)
             {
-                if (s > solutionToSave)
+                if (s < solutionToSave)
                 {
-                    solutionToSave = s;
+                    solutionToSave = new Solution(s);
                 }
             }
         }
 
         private void Tournaments()
         {
-            //Shuffle(); // shuffle solution list
+            Shuffle(); // shuffle solution list
             for (int i = 0; i < solutionList.Count() - 4; i += 4)
             {
                 RunOneTournament(i);
@@ -122,31 +119,32 @@ namespace travelling_salesman
 
         private void RunOneTournament(int start)
         {
+           // solutionList.Sort();
             solutionList.Sort(start, 4, null); // Sort solutions by fitness 
             Mate(start);
         }
 
         private void Mate(int start)
         {
-            //int cross1 = EvolutionHelper.rand(100);
-            //int cross2 = cross1;
-            //while (cross1 == cross2)
-            //{
-            //    cross1 = EvolutionHelper.rand(100);
-            //}
-            //if (cross1 > cross2) SwapInt(ref cross1, ref cross2);
+            int cross1 = EvolutionHelper.rand(100);
+            int cross2 = cross1;
+            while (cross1 == cross2)
+            {
+                cross1 = EvolutionHelper.rand(100);
+            }
+            if (cross1 > cross2) SwapInt(ref cross1, ref cross2);
 
             Solution parent1 = solutionList[start];
             Solution parent2 = solutionList[start + 1];
 
-            List<KeyValuePair<int, double>> child1Tour = new List<KeyValuePair<int, double>>();
-            List<KeyValuePair<int, double>> child2Tour = new List<KeyValuePair<int, double>>();
+            List<double> child1Tour = new List<double>();
+            List<double> child2Tour = new List<double>();
 
             for (int i = 0; i < 100; i++)
             {
-                double randUpperLimit = EvolutionHelper.randDouble();
-                //if ((i < cross1) || (i > cross2)) // two point crossover
-                if (EvolutionHelper.randDouble() < .5) // uniform crossover
+                //double randUpperLimit = EvolutionHelper.randDouble(1);
+                if ((i < cross1) || (i > cross2)) // two point crossover
+                //if (EvolutionHelper.randDouble(1) < .6) // uniform crossover
                 {
                     child1Tour.Add(parent1.Genome[i]);
                     child2Tour.Add(parent2.Genome[i]);
@@ -163,6 +161,8 @@ namespace travelling_salesman
 
             _problem.EvaluateSolution(solutionList[start + 2]);
             _problem.EvaluateSolution(solutionList[start + 3]);
+
+            _workDone++;
 
         }
 

@@ -35,13 +35,14 @@ namespace travelling_salesman
         {
             _btnGo.Enabled = true;
             _progressBar.Value = 100;
-            _lblDistanceDisplay.Text = Convert.ToString(GA.Population.BestSolution.DistanceTravelled);
-            _lblDisplayInitial.Text = Convert.ToString(GA.Population.InitialSolution.DistanceTravelled);
+            _lblDistanceDisplay.Text = Convert.ToString(GA.Population.BestSolution.Fitness);
+            _lblDisplayInitial.Text = Convert.ToString(GA.Population.InitialSolution.Fitness);
         }
 
         private void OnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             _progressBar.Value = e.ProgressPercentage;
+            _lblDistanceDisplay.Text = Convert.ToString(GA.Population.BestSolution.Fitness);
         }
     }
 }

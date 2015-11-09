@@ -6,13 +6,52 @@ using System.Threading.Tasks;
 
 namespace travelling_salesman
 {
+    class indexToDouble
+    {
+        public int index;
+        public double order;
+
+        public indexToDouble(int i, double p)
+        {
+            // TODO: Complete member initialization
+            index = i;
+            order = p;
+        }
+
+    }
+    class City
+    {
+        public double x;
+        public double y;
+
+        public City(double tx, double ty)
+        {
+            x = tx;
+            y = ty;
+        }
+
+    }
+
     class Problem
     {
-        public List<KeyValuePair<int, int>> cityMatrix = new List<KeyValuePair<int,int>>();
+        public List<City> cityMatrix = new List<City>();
 
-        static int CompareValue(KeyValuePair<int, double> lhs, KeyValuePair<int, double> rhs)
+        private static int _size = 100;
+
+        public int Size
         {
-            return lhs.Value.CompareTo(rhs.Value);
+            get { return _size; }
+            set { _size = value; }
+        } 
+
+        private int CompareValue(indexToDouble x, indexToDouble y)
+        {
+            return x.order.CompareTo(y.order);
+        }
+
+        static int CompareValue(double lhs, double rhs)
+        {
+            return lhs.CompareTo(rhs);
         }
 
         public Problem()
@@ -23,49 +62,47 @@ namespace travelling_salesman
         private void GenrateCityMatrix()
         {
             cityMatrix.Clear();
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < _size; i++)
             {
-                cityMatrix.Add(new KeyValuePair<int, int>(EvolutionHelper.rand(1000), EvolutionHelper.rand(1000)));
+                cityMatrix.Add(new City(EvolutionHelper.randDouble(1000), EvolutionHelper.randDouble(1000)));
             }
         }
 
         public void EvaluateSolution(Solution s)
         {
-            //double bonus = 1.0;
-            //double score = 0.0;
             double distanceTravelled = 0;
 
-            List<KeyValuePair<int, double>> sortedListByOrder = new List<KeyValuePair<int,double>>(s.Genome);
-            sortedListByOrder.Sort(CompareValue);
+            List<indexToDouble> sortedListByOrder = new List<indexToDouble>();
 
-            KeyValuePair<int, int> lastCityVisited = cityMatrix[sortedListByOrder[0].Key]; //first city to visit according to genome
-            KeyValuePair<int, int> currentCityVisited;
-
-            foreach (KeyValuePair<int, double> kvp in sortedListByOrder)
+            for (int i = 0; i < _size; i++)
             {
-                currentCityVisited = cityMatrix[kvp.Key];
-
-                distanceTravelled += DistanceFromLastCity(lastCityVisited, currentCityVisited);
-
+                sortedListByOrder.Add(new indexToDouble(i, s.Genome[i]));
             }
 
-            s.DistanceTravelled = distanceTravelled;
+            sortedListByOrder.Sort(CompareValue);
 
-            int magnification = 100;
+            for (int i = 1; i < sortedListByOrder.Count; i++)
+            {
 
-            s.Fitness = (1 / distanceTravelled) * magnification;
+                distanceTravelled += DistanceFromLastCity(cityMatrix[sortedListByOrder[i - 1].index], cityMatrix[sortedListByOrder[i].index]);
+
+            }
+            distanceTravelled += DistanceFromLastCity(cityMatrix[_size-1], cityMatrix[0]);
+
+            s.Fitness = distanceTravelled;
         }
 
-        static private double DistanceFromLastCity(KeyValuePair<int, int> lastCityVisited, KeyValuePair<int, int> currentCityVisited)
+        static private double DistanceFromLastCity(City lastCityVisited, City currentCityVisited)
         {
-            int x1, x2, y1, y2;
-            x1 = lastCityVisited.Key; y1 = lastCityVisited.Value;
-            x2 = currentCityVisited.Key; y2 = currentCityVisited.Value;
+            double x1, x2, y1, y2;
+            x1 = lastCityVisited.x; y1 = lastCityVisited.y;
+            x2 = currentCityVisited.x; y2 = currentCityVisited.y;
 
-            int dx = x2 - x1;
-            int dy = y2 - y1;
+            double dx = x2 - x1;
+            double dy = y2 - y1;
 
             return Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2));
         }
+
     }
 }

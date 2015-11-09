@@ -36,6 +36,7 @@
             this._lblDistanceDisplay = new System.Windows.Forms.Label();
             this._lblOldDistance = new System.Windows.Forms.Label();
             this._lblDisplayInitial = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this._nudGenerations)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,19 +66,29 @@
             // 
             // _nudGenerations
             // 
-            this._nudGenerations.Location = new System.Drawing.Point(262, 235);
+            this._nudGenerations.Location = new System.Drawing.Point(319, 237);
+            this._nudGenerations.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this._nudGenerations.Name = "_nudGenerations";
-            this._nudGenerations.Size = new System.Drawing.Size(120, 20);
+            this._nudGenerations.Size = new System.Drawing.Size(91, 20);
             this._nudGenerations.TabIndex = 2;
+            this._nudGenerations.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // _lblBestDistance
             // 
             this._lblBestDistance.AutoSize = true;
             this._lblBestDistance.Location = new System.Drawing.Point(269, 126);
             this._lblBestDistance.Name = "_lblBestDistance";
-            this._lblBestDistance.Size = new System.Drawing.Size(76, 13);
+            this._lblBestDistance.Size = new System.Drawing.Size(118, 13);
             this._lblBestDistance.TabIndex = 3;
-            this._lblBestDistance.Text = "Best Distance:";
+            this._lblBestDistance.Text = "Best Evolved Distance:";
             // 
             // _lblDistanceDisplay
             // 
@@ -95,9 +106,9 @@
             this._lblOldDistance.AutoSize = true;
             this._lblOldDistance.Location = new System.Drawing.Point(269, 17);
             this._lblOldDistance.Name = "_lblOldDistance";
-            this._lblOldDistance.Size = new System.Drawing.Size(79, 13);
+            this._lblOldDistance.Size = new System.Drawing.Size(103, 13);
             this._lblOldDistance.TabIndex = 5;
-            this._lblOldDistance.Text = "Initial Distance:";
+            this._lblOldDistance.Text = "Initial Best Distance:";
             // 
             // _lblDisplayInitial
             // 
@@ -109,10 +120,21 @@
             this._lblDisplayInitial.TabIndex = 6;
             this._lblDisplayInitial.Text = "0";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(204, 237);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 18);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "# Generations: ";
+            // 
             // MainControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this._lblDisplayInitial);
             this.Controls.Add(this._lblOldDistance);
             this.Controls.Add(this._lblDistanceDisplay);
@@ -138,5 +160,6 @@
         private System.Windows.Forms.Label _lblDistanceDisplay;
         private System.Windows.Forms.Label _lblOldDistance;
         private System.Windows.Forms.Label _lblDisplayInitial;
+        private System.Windows.Forms.Label label1;
     }
 }

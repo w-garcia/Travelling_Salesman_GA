@@ -25,6 +25,7 @@ namespace travelling_salesman
             get { return _population; }
             set { _population = value; }
         }
+
         #endregion 
 
 

@@ -15,9 +15,9 @@ namespace travelling_salesman
             return random.Next(Emax);
         }
 
-        static public double randDouble()
+        static public double randDouble(double Emax)
         {
-            return random.NextDouble();
+            return random.NextDouble() * Emax;
         }
 
         static public KeyValuePair<int, int> randintKVP(int Emax)

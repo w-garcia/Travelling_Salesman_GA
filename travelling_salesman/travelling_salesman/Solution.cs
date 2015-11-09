@@ -7,17 +7,10 @@ namespace travelling_salesman
 {
     class Solution : IEquatable<Solution>, IComparable<Solution>
     {
-        private List<KeyValuePair<int, double>> genome = new List<KeyValuePair<int,double>>();
+        private List<double> _genome = new List<double>();
         private double _fitness;
-        private double _distanceTravelled;
 
         #region public properties
-
-        public double DistanceTravelled
-        {
-            get { return _distanceTravelled; }
-            set { _distanceTravelled = value; }
-        }
 
         public double Fitness
         {
@@ -25,10 +18,10 @@ namespace travelling_salesman
             set { _fitness = value; }
         }
 
-        public List<KeyValuePair<int, double>> Genome
+        public List<double> Genome
         {
-            get { return genome; }
-            set { genome = value; }
+            get { return _genome; }
+            set { _genome = value; }
         }
 
         #endregion
@@ -39,10 +32,10 @@ namespace travelling_salesman
         {
             // A null value means that this object is smaller.
             if (compareSol == null)
-                return -1;
+                return 1;
 
             else
-                return compareSol._fitness.CompareTo(this._fitness);
+                return _fitness.CompareTo(compareSol._fitness);
         }
         public bool Equals(Solution other)
         {
@@ -65,15 +58,21 @@ namespace travelling_salesman
         public Solution()
         {
             RandomizeGenome();
-            _fitness = 0.0;
+            _fitness = 99999999999999999;
         }
 
+        public Solution(Solution s)
+        {
+            _genome = s.Genome;
+            _fitness = s.Fitness;
+
+        }
         private void RandomizeGenome()
         {
-            genome.Clear();
+            _genome.Clear();
             for (int i = 0; i < 100; i++)
             {
-                genome.Add(new KeyValuePair<int, double>(i, EvolutionHelper.randDouble()));
+                _genome.Add(EvolutionHelper.randDouble(100));
               
             }
         }
@@ -84,7 +83,7 @@ namespace travelling_salesman
             for (int i = 0; i < randNumCitiesToFlip; i++)
             {
                 int randIndex = EvolutionHelper.rand(100);
-                genome[randIndex] = new KeyValuePair<int, double>(randIndex, EvolutionHelper.randDouble());
+                _genome[randIndex] = EvolutionHelper.randDouble(100);
             }
         }
     }
