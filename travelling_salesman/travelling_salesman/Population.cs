@@ -141,9 +141,8 @@ namespace travelling_salesman
 
             for (int i = 0; i < 100; i++)
             {
-                //double randUpperLimit = EvolutionHelper.randDouble(1);
-                //if ((i < cross1) || (i > cross2)) // two point crossover
-                if (EvolutionHelper.randDouble(1) < .6) // uniform crossover
+                if ((i < cross1) || (i > cross2)) // two point crossover
+                //if (EvolutionHelper.randDouble(1) < .6) // uniform crossover
                 {
                     child1Tour.Add(parent1.Genome[i]);
                     child2Tour.Add(parent2.Genome[i]);

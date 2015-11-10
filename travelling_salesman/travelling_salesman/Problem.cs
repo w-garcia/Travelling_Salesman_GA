@@ -40,6 +40,11 @@ namespace travelling_salesman
         private int _workDone = 0;
 
 
+        public List<City> CityMatrix
+        {
+            get { return cityMatrix; }
+            set { cityMatrix = value; }
+        }
 
         public int Size
         {

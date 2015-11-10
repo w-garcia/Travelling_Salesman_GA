@@ -30,8 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.mainControl1 = new travelling_salesman.MainControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.mainControl1 = new travelling_salesman.MainControl();
             this.multipleControl1 = new travelling_salesman.MultipleControl();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -59,13 +59,6 @@
             this.tabPage1.Text = "Single Run";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // mainControl1
-            // 
-            this.mainControl1.Location = new System.Drawing.Point(6, 6);
-            this.mainControl1.Name = "mainControl1";
-            this.mainControl1.Size = new System.Drawing.Size(622, 378);
-            this.mainControl1.TabIndex = 0;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.multipleControl1);
@@ -76,6 +69,13 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Multiple Runs";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // mainControl1
+            // 
+            this.mainControl1.Location = new System.Drawing.Point(6, 6);
+            this.mainControl1.Name = "mainControl1";
+            this.mainControl1.Size = new System.Drawing.Size(622, 378);
+            this.mainControl1.TabIndex = 0;
             // 
             // multipleControl1
             // 
@@ -92,7 +92,7 @@
             this.ClientSize = new System.Drawing.Size(684, 463);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
-            this.Text = "CAP4630 Garcia Washington HW2";
+            this.Text = "CAP4630 Garcia Washington Travelling_Salesman_HW";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);

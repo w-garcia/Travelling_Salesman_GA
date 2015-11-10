@@ -37,6 +37,7 @@
             this._nudNumGensPerRun = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this._btnSaveLatestData = new System.Windows.Forms.Button();
             this._lblRunsSoFar = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this._lblWorkResult = new System.Windows.Forms.Label();
@@ -122,7 +123,7 @@
             // 
             this._nudNumGensPerRun.Location = new System.Drawing.Point(193, 53);
             this._nudNumGensPerRun.Maximum = new decimal(new int[] {
-            2000,
+            100000,
             0,
             0,
             0});
@@ -152,6 +153,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this._btnSaveLatestData);
             this.groupBox2.Controls.Add(this._lblRunsSoFar);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this._lblWorkResult);
@@ -163,6 +165,17 @@
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
+            // 
+            // _btnSaveLatestData
+            // 
+            this._btnSaveLatestData.Enabled = false;
+            this._btnSaveLatestData.Location = new System.Drawing.Point(463, 35);
+            this._btnSaveLatestData.Name = "_btnSaveLatestData";
+            this._btnSaveLatestData.Size = new System.Drawing.Size(73, 78);
+            this._btnSaveLatestData.TabIndex = 9;
+            this._btnSaveLatestData.Text = "Save Latest Data";
+            this._btnSaveLatestData.UseVisualStyleBackColor = true;
+            this._btnSaveLatestData.Click += new System.EventHandler(this.OnClickSaveData);
             // 
             // _lblRunsSoFar
             // 
@@ -258,5 +271,6 @@
         private System.Windows.Forms.Label _lblRunsSoFar;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label _lblRunsComplete;
+        private System.Windows.Forms.Button _btnSaveLatestData;
     }
 }

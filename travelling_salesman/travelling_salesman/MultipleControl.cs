@@ -17,7 +17,8 @@ namespace travelling_salesman
         List<double> _runResults = new List<double>();
         GeneticAlgorithm _classGA;
 
-        int _generationsSoFar = 0;
+        GeneticAlgorithm _bestSolution = new GeneticAlgorithm();
+
         int _runsSoFar = 0;
         double _totalWorkDone = 0;
 
@@ -33,6 +34,7 @@ namespace travelling_salesman
 
         private void OnClickGo(object sender, EventArgs e)
         {
+            _runResults.Clear();
             _lblRunsComplete.Visible = false;
             DisableControls();
 
@@ -70,6 +72,11 @@ namespace travelling_salesman
             if (_runsSoFar < _nudNumRuns.Value && _classGA.Population.GenerationsSoFar == _nudNumGensPerRun.Value)
             {
                 _runResults.Add(_classGA.Population.BestSolution.Fitness);
+                
+                if (_classGA.Population.BestSolution < _bestSolution.Population.BestSolution)
+                {
+                    _bestSolution = _classGA;
+                }
 
                 _progressBarMult.Value = 0;
                 _runsSoFar++;
@@ -79,6 +86,9 @@ namespace travelling_salesman
             else if (_runsSoFar == _nudNumRuns.Value)
             {
                 _runResults.Add(_classGA.Population.BestSolution.Fitness);
+                
+
+
                 _progressBarMult.Value = 100;
 
                 _runsSoFar = 0;
@@ -90,6 +100,11 @@ namespace travelling_salesman
             }
         }
 
+        private int CompareValue(indexToDouble x, indexToDouble y)
+        {
+            return x.order.CompareTo(y.order);
+        }
+
         private void WriteResults()
         {
             SaveFileDialog sfd = new SaveFileDialog();
@@ -99,16 +114,44 @@ namespace travelling_salesman
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
+                
                 _filePath = sfd.FileName;
-                using (StreamWriter sw = new StreamWriter(_filePath))
+                try
                 {
-                    for (int i = 0; i < _runResults.Count; i++)
+                    using (StreamWriter sw = new StreamWriter(_filePath))
                     {
-                        sw.WriteLine(_runResults[i] + ",");
-                    }
-                }
+                        for (int i = 0; i < _runResults.Count; i++)
+                        {
+                            sw.WriteLine(_runResults[i] + ",");
+                        }
+                        sw.WriteLine("Best Solution X and Y: ");
 
-                _lblRunsComplete.Visible = true;
+                        List<indexToDouble> sortedList = new List<indexToDouble>();
+
+                        Solution bestSolution = _bestSolution.Population.BestSolution;
+
+                        for (int i = 0; i < bestSolution.Genome.Count; i++)
+                        {
+                            sortedList.Add(new indexToDouble(i, bestSolution.Genome[i]));
+                        }
+
+                        sortedList.Sort(CompareValue);
+
+                        List<City> bestProblem = _bestSolution.Problem.CityMatrix;
+
+                        for (int i = 0; i < bestProblem.Count; i++)
+                        {
+                            sw.WriteLine(bestProblem[sortedList[i].index].x + "," + bestProblem[sortedList[i].index].y);
+                        }
+
+                    }
+
+                    _lblRunsComplete.Visible = true;
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("File is being used by another process, try closing the file and trying again later. ");
+                }
 
             }
         }
@@ -118,6 +161,13 @@ namespace travelling_salesman
             _btnGoMult.Enabled = true;
             _nudNumRuns.Enabled = true;
             _nudNumGensPerRun.Enabled = true;
+            _btnSaveLatestData.Enabled = true;
+
+        }
+
+        private void OnClickSaveData(object sender, EventArgs e)
+        {
+            WriteResults();
         }
 
 
